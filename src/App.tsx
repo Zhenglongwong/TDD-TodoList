@@ -15,7 +15,8 @@ const App: React.FC = () => {
 			return TodoList.slice(0, deleteIndex).concat(TodoList.slice(deleteIndex + 1));
 		});
 	};
-
+	
+	//potentially dangerous
 	const [numTodos, Todos] = useMemo(
 		() => [
 			TodoList.length,
