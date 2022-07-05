@@ -1,9 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup";
-import App from "../App";
+import TodoApp from "../../components/Todo/Index";
 
-describe("App", () => {
+describe("TodoApp", () => {
 	const mockAddTodos = async (
 		user: UserEvent,
 		btn: HTMLElement,
@@ -26,7 +26,7 @@ describe("App", () => {
 	test("shows correct number of todos when they are added", async () => {
 		const user = userEvent.setup();
 		//Given
-		render(<App />);
+		render(<TodoApp />);
 		const TEXT = "new todo";
 		const textField = screen.getByRole("textbox");
 		const addBtn = screen.getByRole("button", { name: "Add" });
@@ -41,7 +41,7 @@ describe("App", () => {
 	test("shows correct number of todos when deleted", async () => {
 		const user = userEvent.setup();
 		//Given
-		render(<App />);
+		render(<TodoApp />);
 		const TEXT = "new todo";
 		const textField = screen.getByRole("textbox");
 		const addBtn = screen.getByRole("button", { name: "Add" });

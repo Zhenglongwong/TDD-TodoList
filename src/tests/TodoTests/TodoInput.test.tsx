@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import TodoInput from "../components/TodoInput";
-import App from "../App";
+import TodoInput from "../../components/Todo/TodoInput";
+import TodoApp from "../../components/Todo/Index";
 
 describe("TodoInput textbox", () => {
 	test("matches user input", async () => {
@@ -34,7 +34,7 @@ describe("TodoInput add button", () => {
 	test("creates a new todo on click using textbox value", async () => {
 		const user = userEvent.setup();
 		//Given
-		render(<App />);
+		render(<TodoApp />);
 		const TEXT = "new todo";
 		const addBtn = screen.getByRole("button", { name: "Add" });
 		//When

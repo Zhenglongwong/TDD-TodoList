@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import Todo from "../components/Todo";
-import App from "../App";
+import Todo from "../../components/Todo/Todo";
+import TodoApp from "../../components/Todo/Index";
 
 describe("todo", () => {
 	test("should display text passed to the text prop", () => {
@@ -16,7 +16,7 @@ describe("todo", () => {
 		const user = userEvent.setup();
 		//Given
 		const TEXT = "hello world";
-		render(<App />);
+		render(<TodoApp />);
 		const addBtn = screen.getByRole("button", { name: "Add" });
 		await user.keyboard(TEXT);
 		await user.click(addBtn);
