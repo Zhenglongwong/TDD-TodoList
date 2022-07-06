@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { UserEvent } from "@testing-library/user-event/dist/types/setup";
-import TodoApp from "../../components/Todo/Index";
+import TodoApp from "../../components/Todo";
 
 describe("TodoApp", () => {
 	const mockAddTodos = async (

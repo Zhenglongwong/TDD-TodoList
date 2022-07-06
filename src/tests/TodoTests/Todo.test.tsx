@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Todo from "../../components/Todo/Todo";
-import TodoApp from "../../components/Todo/Index";
+import TodoApp from "../../components/Todo";
 
 describe("todo", () => {
 	test("should display text passed to the text prop", () => {
