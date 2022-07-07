@@ -1,36 +1,35 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import Signup from "../../components/Signup/Signup";
-// import axios from "axios";
+import {BrowserRouter as Router} from 'react-router-dom'
 
 describe("Signup", () => {
 	const getEleByRole = (role: string, name: string): HTMLElement => {
 		return screen.getByRole(role, { name: name });
 	};
-
 	describe("user interface should have", () => {
-		test("email field field", () => {
-			render(<Signup />);
+		test("email field", () => {
+			render(<Router><Signup /></Router>)
 			expect(getEleByRole("textbox", "Email")).toBeInTheDocument();
 		});
 		test("password field", () => {
-			render(<Signup />);
+			render(<Router><Signup /></Router>);
 			expect(getEleByRole("textbox", "Password")).toBeInTheDocument();
 		});
 		test("password check field", () => {
-			render(<Signup />);
+			render(<Router><Signup /></Router>);
 			expect(getEleByRole("textbox", "Password Check")).toBeInTheDocument();
 		});
 		test("signup button", () => {
-			render(<Signup />);
+			render(<Router><Signup /></Router>);
 			expect(getEleByRole("button", "Signup")).toBeInTheDocument();
 		});
 	});
 
 	describe("email field should show error message if", () => {
-		test("touched and blank", async () => {
+		test("clicked and blank", async () => {
 			const user = userEvent.setup();
-			render(<Signup />);
+			render(<Router><Signup /></Router>);
 
 			await user.click(getEleByRole("textbox", "Email"));
 			await user.click(getEleByRole("textbox", "Password"));
@@ -38,9 +37,9 @@ describe("Signup", () => {
 			const errorMsg = await screen.findByText("Email is required", {}, { timeout: 50 });
 			expect(errorMsg).toBeInTheDocument();
 		});
-		test("touched and not a valid email string", async () => {
+		test("clicked and not a valid email string", async () => {
 			const user = userEvent.setup();
-			render(<Signup />);
+			render(<Router><Signup /></Router>);
 
 			await user.click(getEleByRole("textbox", "Email"));
 			await user.keyboard("howdy");
@@ -51,10 +50,10 @@ describe("Signup", () => {
 		});
 	});
 
-	describe("Password field should show error message if", () => {
-		test("touched and blank", async () => {
+	describe("password field should show error message if", () => {
+		test("clicked and blank", async () => {
 			const user = userEvent.setup();
-			render(<Signup />);
+			render(<Router><Signup /></Router>);
 
 			await user.click(getEleByRole("textbox", "Password"));
 			await user.click(getEleByRole("textbox", "Email"));
@@ -62,9 +61,9 @@ describe("Signup", () => {
 			const errorMsg = await screen.findByText("Password is required", {}, { timeout: 50 });
 			expect(errorMsg).toBeInTheDocument();
 		});
-		test("touched and less than 8 characters", async () => {
+		test("clicked and less than 8 characters", async () => {
 			const user = userEvent.setup();
-			render(<Signup />);
+			render(<Router><Signup /></Router>);
 
 			await user.click(getEleByRole("textbox", "Password"));
 			await user.keyboard("1234567");
@@ -79,10 +78,10 @@ describe("Signup", () => {
 		});
 	});
 
-	describe("Password field check should show error message if", () => {
-		test("touched and blank", async () => {
+	describe("password check field should show error message if", () => {
+		test("clicked and blank", async () => {
 			const user = userEvent.setup();
-			render(<Signup />);
+			render(<Router><Signup /></Router>);
 
 			await user.click(getEleByRole("textbox", "Password Check"));
 			await user.click(getEleByRole("textbox", "Email"));
@@ -94,9 +93,9 @@ describe("Signup", () => {
 			);
 			expect(errorMsg).toBeInTheDocument();
 		});
-		test("touched and not equal to password field", async () => {
+		test("clicked and not equal to password field", async () => {
 			const user = userEvent.setup();
-			render(<Signup />);
+			render(<Router><Signup /></Router>);
 
 			await user.click(getEleByRole("textbox", "Password"));
 			await user.keyboard("123456733");
@@ -112,7 +111,7 @@ describe("Signup", () => {
 	describe("button", () => {
 		test("disabled if email field is wrong", async () => {
 			const user = userEvent.setup();
-			render(<Signup />);
+			render(<Router><Signup /></Router>);
 
 			await user.click(getEleByRole("textbox", "Email"));
 			await user.keyboard("asdfasd");
@@ -121,7 +120,7 @@ describe("Signup", () => {
 		});
 		test("disabled if password field is wrong", async () => {
 			const user = userEvent.setup();
-			render(<Signup />);
+			render(<Router><Signup /></Router>);
 
 			await user.click(getEleByRole("textbox", "Password"));
 			await user.keyboard("123456");
@@ -131,7 +130,7 @@ describe("Signup", () => {
 		});
 		test("disabled if password check field is wrong", async () => {
 			const user = userEvent.setup();
-			render(<Signup />);
+			render(<Router><Signup /></Router>);
 
 			await user.click(getEleByRole("textbox", "Password"));
 			await user.keyboard("123456733");
@@ -140,22 +139,5 @@ describe("Signup", () => {
 			await user.click(getEleByRole("textbox", "Password"));
 			expect(getEleByRole("button", "Signup")).toBeDisabled();
 		});
-		// test.todo("will send get request with form values");
 	});
-	// describe("on receiving response", () => {
-    //     test.todo("will show success alert message if successful", async () => {
-    //         render(<Signup />);
-	// 		jest.mock("axios");
-	// 		const mockedAxios = axios as jest.Mocked<typeof axios>;
-	// 		mockedAxios.get.mockResolvedValue({
-	// 			data: {
-	// 				status: "success",
-	// 			},
-    //         });
-            
-
-
-	// 	});
-	// 	test.todo("will show failure alert message if unsuccessful");
-	// });
 });

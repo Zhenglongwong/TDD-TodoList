@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 
 interface values {
-  email: string;
-  password: string;
-  passwordCheck: string;
+	email: string;
+	password: string;
+	passwordCheck: string;
 }
 
 const Signup = () => {
+	const navigate = useNavigate();
 	const initialValues = {
 		email: "",
 		password: "",
@@ -26,21 +28,27 @@ const Signup = () => {
 			.required("Please enter your password again"),
 	});
 
-  const [resStatus, setResStatus] = useState(0);
-  const handleSubmit = async (values: values): Promise<void> => {
-    const {data} = await axios.post("/api/users", values)
-    setResStatus(data.data.status)
-  }
+	const [resStatus, setResStatus] = useState(0);
+	const handleSubmit = async (values: values): Promise<void> => {
+		const { data } = await axios.post("/api/users", values);
+		setResStatus(data.data.status);
+	};
+
+	useEffect(() => {
+		if (resStatus === 200) {
+			setTimeout(() => {navigate("/")}, 200)
+		}
+	}, [resStatus, navigate]);
 
 	return (
 		<>
-      {resStatus === 200 &&(<h1>Signup successful!</h1>)}
-			{resStatus === 400 && (<h1>Signup failed!</h1>)}
+			{resStatus === 200 && <h1>Signup successful!</h1>}
+			{resStatus === 400 && <h1>Signup failed!</h1>}
 			<Formik
 				initialValues={initialValues}
 				validationSchema={validationSchema}
 				onSubmit={(values, { setSubmitting }) => {
-          handleSubmit(values)
+					handleSubmit(values);
 					setTimeout(() => {
 						setSubmitting(false);
 					}, 400);
